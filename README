@@ -1,0 +1,31 @@
+                   =========================================
+                   fsub — substitute a file into other files
+                   =========================================
+
+fsub is a command-line utility to replace substrings within files with other
+files.  This has a variety of usecases, such as static-site generators.  Take
+for example the following skeleton HTML file:
+
+    <!-- base.html -->
+    <table>
+      <tbody>
+        <!-- TABLE DATA -->
+      </tbody>
+    </table>
+
+We want to be able to generate the table data externally, and then fill in the
+above table.  With fsub this is made very easy.  The following commands generate
+table data which is written to “data.html”, and then replace the comment in the
+base file with the contents of “data.html” and write the result to “index.html”:
+
+    $ ./generate-table-data.sh >data.html
+    $ fsub '<!-- TABLE DATA -->' data.html base.html >index.html
+
+You can also use the special filename ‘-’ to represent the standard input,
+allowing for usage in a pipeline:
+
+    $ ./generate-table-data.sh
+          | fsub '<!-- TABLE DATA -->' - base.html >index.html
+
+This is just a very basic overview, for more information check the fsub(1)
+manual page.
