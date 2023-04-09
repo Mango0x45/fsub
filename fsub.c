@@ -46,7 +46,7 @@ static void  fsub(char *, pcre2_match_data *, pcre2_code *, char *);
 int
 main(int argc, char *argv[])
 {
-	int fd, fd2, ec, opt;
+	int fd = 0, fd2, ec, opt;
 	char *needle, *haystack, *repl,
 	     *argv0 = argv[0],
 	     *optstr = "dim",
@@ -89,7 +89,10 @@ main(int argc, char *argv[])
 	}
 
 	needle = argv[0];
-	fd = loadfile(&repl, argv[1]);
+	if (streq(argv[1], "-"))
+		repl = stdio_to_string();
+	else
+		fd = loadfile(&repl, argv[1]);
 	rx = pcre2_compile((PCRE2_SPTR) needle, PCRE2_ZERO_TERMINATED,
 	                   rx_opts, &ec, &eo, NULL);
 	if (rx == NULL) {
@@ -115,7 +118,9 @@ main(int argc, char *argv[])
 
 	pcre2_match_data_free(mdata);
 	pcre2_code_free(rx);
-	close(fd);
+
+	if (!streq(argv[1], "-"))
+		close(fd);
 
 	return rv;
 }
