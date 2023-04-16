@@ -1,0 +1,102 @@
+.\" BSD Zero Clause License
+.\"
+.\" Copyright (c) 2023 Thomas Voss
+.\"
+.\" Permission to use, copy, modify, and/or distribute this software for any
+.\" purpose with or without fee is hereby granted.
+.\"
+.\" THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+.\" REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+.\" AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+.\" INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+.\" LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+.\" OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+.\" PERFORMANCE OF THIS SOFTWARE.
+.Dd $Mdocdate: April 16 2023 $
+.Dt FSUB 1
+.Os
+.Sh NAME
+.Nm fsub
+.Nd substitute a file into other files
+.Sh SYNOPSIS
+.Nm
+.Op Fl dim
+.Ar pattern
+.Ar basefile
+.Op Ar
+.Sh DESCRIPTION
+The
+.Nm
+utility is a utility that allows you to replace substrings within files with the
+contents of other files.
+The special
+.Sq -
+filename can be used to refer to the standard input.
+The pattern
+.Ar pattern
+is a perl\-compatible regular expression.
+For all occurrences of
+.Ar pattern
+in
+.Ar ,
+the contents of
+.Ar basefile
+will be printed to the standard output instead.
+.Pp
+If no files to act on are provided, the substitution is performed on the
+standard input.
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl d , Fl Fl dotall
+Let the
+.Sq \&.
+character in
+.Ar pattern
+match newline characters.
+.It Fl i , Fl Fl ignorecase
+Let
+.Ar pattern
+match case\-insensitively.
+.It Fl m , Fl Fl multiline
+Let the
+.Sq ^
+and
+.Sq $
+characters in
+.Ar pattern
+match newline characters.
+.El
+.Sh EXIT STATUS
+.Ex -std
+.Sh EXAMPLES
+Replace all integer numbers in the file
+.Pa bar
+with the contents of the file
+.Pa foo :
+.Pp
+.Dl $ fsub '[-+]?[0-9]+' foo bar
+.Pp
+Replace all words in the files
+.Pa bar
+and
+.Pa baz
+with the contents of the file
+.Pa foo :
+.Pp
+.Dl $ fsub -i '[a-z]' foo bar baz
+.Pp
+Replace all occurances of the word
+.Pq hello
+at the start of a line of the file
+.Pa bar
+with the contents of the file
+.Pa foo :
+.Pp
+.Dl $ fsub -m '^hello' foo bar
+.Sh SEE ALSO
+.Xr grep 1 ,
+.Xr sed 1 ,
+.Xr pcre 3
+.Sh AUTHORS
+.An Thomas Voss Aq Mt mail@thomasvoss.com
