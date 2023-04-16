@@ -1,6 +1,6 @@
-                   =========================================
-                   fsub — substitute a file into other files
-                   =========================================
+                 ┌───────────────────────────────────────────┐
+                 │ fsub — substitute a file into other files │
+                 └───────────────────────────────────────────┘
 
 fsub is a command-line utility to replace substrings within files with other
 files.  This has a variety of usecases, such as static-site generators.  Take
