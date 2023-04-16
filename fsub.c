@@ -50,7 +50,7 @@ main(int argc, char *argv[])
 	char *needle, *haystack, *repl,
 	     *argv0 = argv[0],
 	     *optstr = "dim",
-	     *progargs = "[-dim] pattern file [file ...]";
+	     *progargs = "[-dim] pattern basefile [file ...]";
 	uint32_t rx_opts = PCRE2_UTF;
 	pcre2_code *rx;
 	pcre2_match_data *mdata;
